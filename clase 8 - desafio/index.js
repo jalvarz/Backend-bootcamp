@@ -1,5 +1,4 @@
 const express = require('express')
-const { Z_FIXED } = require('zlib')
 const { Router } = express
 
 const Contenedor = require('./src/Contenedor.js')
@@ -23,7 +22,7 @@ router.post('/', async (req,res)=>{
 console.log(req.body)
 //const {body} = req;
 const id = await c.save(req.body);
-res.status(200).send(`guardado con id ",${id}`)
+res.status(200).send(`guardado con id ${id}`)
 })
 
 
