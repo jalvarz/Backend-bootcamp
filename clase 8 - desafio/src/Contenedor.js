@@ -58,8 +58,8 @@ class Contenedor {
     
     deleteById(id){
         id = Number(id)
-            let filtrado = this.objlist.filter(obj => obj.id !== id) 
-        }
+        this.objlist = this.objlist.filter(obj => obj.id !== id)
+    }
     updateById(id,data){
         id = Number(id)
         var foundIndex = this.objlist.findIndex(x => x.id == id);
