@@ -8,29 +8,29 @@ class Contenedor {
 
        this.objlist=[
         {
-          "title": "escuadrita",
-          "price": "300",
-          "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-          "id": 0
+          title: "bujia",
+          price: 50,
+          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png",
+          id: 0
         },
         {
-          "title": "cosa",
-          "price": "200",
-          "thumbnail": "foto.png",
-          "id": 4
+          title: "amortiguador",
+          price: 200,
+          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png",
+          id: 4
         },
         {
-          "title": "regla",
-          "price": "400",
-          "thumbnail": "url.png",
-          "id": 6
+          title: "pistones",
+          price: 400,
+          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_piston_service_machine_forcer_repair-08-64.png",
+          id: 6
         }
       ]
     }
 
       save(obj){
         let maxId=0
-    
+            console.log(obj)
             if (this.objlist.length>0){
                 const ids = this.objlist.map(object => {
                   return object.id;

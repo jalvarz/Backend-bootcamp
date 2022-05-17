@@ -1,4 +1,6 @@
 const express = require('express')
+const handlebars = require('express-handlebars')
+const { append } = require('express/lib/response')
 const { Router } = express
 
 const Contenedor = require('./src/Contenedor.js')
@@ -11,6 +13,24 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/api/productos', router)
+
+app.set('views','./views')
+app.set('view engine','hbs')
+
+app.engine('hbs',handlebars.engine({
+   extname:".hbs",
+   defaultLayout:'index.hbs', 
+   layoutsDir:__dirname+"/views/layouts",
+   partialsdIR:__dirname+"/views/partials"
+}))
+
+app.get('/productos',(req,res)=>{
+   const products = c.getAll()
+   res.render("main",{
+       productos:products, listExists:(products.length >0 ? true : false)
+   })
+})
+
 
 //GET /api/productos
 router.get('/', async (req, res) => {
@@ -25,11 +45,11 @@ router.get('/:id', async (req, res) => {
    res.status(200).json(product)
 })
 
-// POST /api/productos/:id
+// POST /api/productos/:id 
 router.post('/', async (req,res)=>{
-console.log(req.body)
 const id = await c.save(req.body);
-res.status(200).send(`guardado con id ${id}`)
+console.log(c.getAll())
+res.status(200).redirect('/productos')
 })
 
 
