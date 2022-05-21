@@ -11,6 +11,7 @@ app.engine('hbs',handlebars.engine({
     layoutsDir:__dirname+"/views/layouts",
     partialsdIR:__dirname+"/views/partials"
 }))
+
 fakeApi=()=>[
 {name:"Katarina",lane:'midlaner'},
 {name:"Jayce",lane:'toplaner'},
@@ -29,3 +30,5 @@ app.listen(PORT, err =>{
     if(err) throw new Error (`error en servidor ${err}`)
     console.log(`el servidor express escuchando en el puerto ${PORT}`)
 })
+
+
