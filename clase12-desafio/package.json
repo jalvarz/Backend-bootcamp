@@ -1,0 +1,15 @@
+{
+  "name": "clase12-desafio",
+  "version": "1.0.0",
+  "description": "clase12 desafio",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Javier Alvarez",
+  "license": "ISC",
+  "dependencies": {
+    "express-handlebars": "^6.0.6"
+  }
+}
