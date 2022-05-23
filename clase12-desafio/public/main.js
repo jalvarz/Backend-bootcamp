@@ -1,6 +1,7 @@
 const button = document.querySelector("#button")
+const table = document.querySelector("#table-body")
 
-
+const socket = io.connect()
 
 button.addEventListener("click",(event)=>{
     console.log("click")
@@ -12,6 +13,20 @@ button.addEventListener("click",(event)=>{
         price: inputPrice,
         thumbnail: inputUrl
     }
-    socket.emit("newProduct",product)
+    socket.emit('newProduct',product)
  })
- 
+
+
+ socket.on('updateData',(products)=>{
+    table.innerHTML = products.map(product=>{
+        return(
+            `
+            <tr>
+            <td><img src="${product.thumbnail}" class="img-fluid img-thumbnail" ></td>
+            <td>${product.title}</td> 
+            <td>${product.price}</td>
+            </tr>
+            `
+        )
+    }).join(" ")
+})

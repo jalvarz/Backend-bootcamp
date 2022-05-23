@@ -43,6 +43,9 @@ app.engine('hbs',handlebars.engine({
    partialsdIR:__dirname+"/views/partials"
 }))
 
+const products = c.getAll()
+
+
 app.get('/',(req,res)=>{
    const products = c.getAll()
    res.render("main",{
@@ -67,7 +70,11 @@ router.get('/:id', async (req, res) => {
 // POST /api/productos/:id 
 router.post('/', async (req,res)=>{
 const id = await c.save(req.body);
-console.log(c.getAll())
+//io.sockets.emit('updateData',req.body)
+res.render("main",{
+   productos:products, listExists:(products.length >0 ? true : false)
+})
+//console.log(c.getAll())
 res.status(200).redirect('/')
 })
 
@@ -89,12 +96,12 @@ router.delete('/:id', async(req, res) => {
 //nuevo servidor
 io.on('connection',(socket)=>{
    console.log('websocket inicializado',socket.id)
-   socket.emit('data',messages)
+   //socket.emit('data', products)
 
    socket.on("newProduct",product=>{
            products.push(product)
            //console.log(message)
-           io.sockets.emit('data',products)
+           io.sockets.emit('updateData',products)
    })
 })
 
@@ -120,7 +127,8 @@ io.on('connection',(socket)=>{
 
 const PORT = 8080
 
-app.listen(PORT, err =>{
+httpServer.listen(PORT, err =>{
     if(err) throw new Error (`error en servidor ${err}`)
     console.log(`el servidor express escuchando en el puerto ${PORT}`)
 })
+
