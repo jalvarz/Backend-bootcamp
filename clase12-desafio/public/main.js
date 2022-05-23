@@ -30,3 +30,31 @@ button.addEventListener("click",(event)=>{
         )
     }).join(" ")
 })
+
+const divMessages = document.querySelector("#messages")
+const enviarMsg = document.querySelector("#enviarMsg")
+
+enviarMsg.addEventListener("click",(event)=>{
+    const inputMail = document.querySelector("#mail").value
+    const inputTexto = document.querySelector("#texto").value
+    document.getElementById("mail").disabled = true
+    const message = {
+        mail: inputMail,
+        text: inputTexto,
+        date: new Date().toLocaleString()
+    }
+    socket.emit("newMessage",message)
+})
+
+socket.on('messages',(messages)=>{
+    divMessages.innerHTML = messages.map(message=>{
+        return(
+            `<div> 
+            <strong style="color:blue;font-weight:bold">${message.mail}</strong>
+            <a style="color:brown">${message.date}</a>
+            <a style="color:green;font-weight:italic">${message.text} </a>
+            </div>`
+        )
+    }).join(" ")
+
+})

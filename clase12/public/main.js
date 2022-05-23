@@ -8,7 +8,8 @@ button.addEventListener("click",(event)=>{
     const inputTexto = document.querySelector("#texto").value
     const message = {
         author: inputNombre,
-        text: inputTexto
+        text: inputTexto,
+        date : new Date().toLocaleString()
     }
     socket.emit("newMessage",message)
 })

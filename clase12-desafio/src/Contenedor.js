@@ -1,32 +1,17 @@
 const fs = require('fs')
-/*
-const { join } = require('path')
-const { stringify } = require('querystring')
-*/
-class Contenedor {
-   constructor(){
 
-       this.objlist=[
-        {
-          title: "bujia",
-          price: 50,
-          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png",
-          id: 0
-        },
-        {
-          title: "amortiguador",
-          price: 200,
-          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png",
-          id: 4
-        },
-        {
-          title: "pistones",
-          price: 400,
-          thumbnail: "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_piston_service_machine_forcer_repair-08-64.png",
-          id: 6
+class Contenedor {
+    constructor(archivo){
+        this.file = archivo
+        this.objlist=[]
+        try{
+            this.objlist = JSON.parse(fs.readFileSync(this.file,'utf-8'))
+            console.log(`archivo encontrado ${this.file}`)
+        }catch{
+            console.log(`archivo no encontrado, creando ${this.file}`)
+            fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
         }
-      ]
-    }
+     }
 
       save(obj){
         let maxId=0
@@ -43,6 +28,7 @@ class Contenedor {
                 obj.id = 0
             }
             this.objlist.push(obj)
+            fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
             
             return obj.id
 
@@ -59,12 +45,14 @@ class Contenedor {
     deleteById(id){
         id = Number(id)
         this.objlist = this.objlist.filter(obj => obj.id !== id)
+        fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
     }
     updateById(id,data){
         id = Number(id)
         var foundIndex = this.objlist.findIndex(x => x.id == id);
         this.objlist[foundIndex] = data;
         this.objlist[foundIndex].id = id
+        fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
 
     }
 

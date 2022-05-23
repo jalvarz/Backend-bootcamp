@@ -23,9 +23,15 @@
 		  </tbody>
 		</table> 
         {{else}}
-        <H3>Upss, parece que aun no hay productos</H3>
+        <H2>Upss, parece que aun no hay productos</H2>
         {{/if}}
-        <a class="btn btn-primary" href="\" role="button">Agregar</a>
+
+      <h2>Centro de Mensajes</h2>
+        <input type ="text" id ="mail" class="input" placeholder = "ingrese su mail"/>
+        <input type ="text" id ="texto" class="input" placeholder = "mensaje a enviar"/>
+        <button id="enviarMsg" value="Enviar" class="btn btn-primary" >Enviar</button>
+      <div id = "messages"></div>
+    
     </div>
   </div>
 </div>

@@ -5,26 +5,17 @@ const http = require('http')
 const app = express()
 
 const httpServer = http.createServer(app)
-//var io = require("socket.io")(httpServer);
 const io = new Server(httpServer)
-
-//const socket = io.connect();
-
 
 const handlebars = require('express-handlebars')
 const { append } = require('express/lib/response')
 const { Router } = express
 
-
-
-
-
-
 const Contenedor = require('./src/Contenedor.js')
 const c = new Contenedor('productos.json')
+const m = new Contenedor('mensajes.json')
 
 const router = Router()
-
 
 //middleware
 app.use(express.static(__dirname+'/public'))
@@ -43,8 +34,8 @@ app.engine('hbs',handlebars.engine({
    partialsdIR:__dirname+"/views/partials"
 }))
 
+const messages = m.getAll()
 const products = c.getAll()
-
 
 app.get('/',(req,res)=>{
    const products = c.getAll()
@@ -52,7 +43,6 @@ app.get('/',(req,res)=>{
        productos:products, listExists:(products.length >0 ? true : false)
    })
 })
-
 
 //GET /api/productos
 router.get('/', async (req, res) => {
@@ -70,11 +60,9 @@ router.get('/:id', async (req, res) => {
 // POST /api/productos/:id 
 router.post('/', async (req,res)=>{
 const id = await c.save(req.body);
-//io.sockets.emit('updateData',req.body)
 res.render("main",{
    productos:products, listExists:(products.length >0 ? true : false)
 })
-//console.log(c.getAll())
 res.status(200).redirect('/')
 })
 
@@ -95,34 +83,29 @@ router.delete('/:id', async(req, res) => {
 
 //nuevo servidor
 io.on('connection',(socket)=>{
+   io.sockets.emit('messages',messages)
    console.log('websocket inicializado',socket.id)
-   //socket.emit('data', products)
 
    socket.on("newProduct",product=>{
            products.push(product)
-           //console.log(message)
+       //    const id = c.save(product);
+
            io.sockets.emit('updateData',products)
    })
+
+   socket.on("newMessage",message=>{
+      m.save(message)
+      messages.push(message)
+      console.log(message)
+      io.sockets.emit('messages',messages)
+   })
+
 })
 
 
 io.on('data',(messages)=>{
    console.log(`llego ${messages}`)
-
    })
-
-/*
-io.on('connection',(socket)=>{
-   console.log('websocket inicializado',socket.id)
-   socket.emit('messages',messages)
-
-   socket.on("newMessage",message=>{
-           messages.push(message)
-           console.log(message)
-           io.sockets.emit('messages',messages)
-   })
-})
-*/
 
 
 const PORT = 8080
