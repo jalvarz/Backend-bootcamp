@@ -1,20 +1,22 @@
 [
   {
+    "id": 0,
+    "timestamp":"444",
     "title": "bujia",
+    "descriptio":"es una bujia",
+    "codigo": "33ffS",
     "price": 50,
+    "stock":40,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png",
-    "id": 0
   },
   {
+    "id": 4,
+    "timestamp":"444",
     "title": "amortiguador",
+    "descriptio":"es un amoriguador",
+    "codigo": "33ffS",
     "price": 200,
+    "stock":40,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png",
-    "id": 4
-  },
-  {
-    "title": "pistones",
-    "price": 400,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_piston_service_machine_forcer_repair-08-64.png",
-    "id": 6
   }
 ]

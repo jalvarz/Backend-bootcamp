@@ -37,6 +37,8 @@ app.engine('hbs',handlebars.engine({
 const messages = m.getAll()
 const products = c.getAll()
 
+const admin = true
+
 app.get('/',(req,res)=>{
    const products = c.getAll()
    res.render("main",{
@@ -59,26 +61,41 @@ router.get('/:id', async (req, res) => {
 
 // POST /api/productos/:id 
 router.post('/', async (req,res)=>{
-const id = await c.save(req.body);
-res.render("main",{
-   productos:products, listExists:(products.length >0 ? true : false)
-})
-res.status(200).redirect('/')
-})
+   if (admin){
+
+      const id = await c.save(req.body);
+      res.render("main",{
+         productos:products, listExists:(products.length >0 ? true : false)
+      })
+      res.status(200).redirect('/')
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
+      res.status(503)
+   }
+}
+)
 
 
 // PUT /api/productos/:id
 router.put('/:id',async(req,res)=>{
+   if (admin){
    const {id} = req.body
    const result = await c.updateById(id,req.query)
    res.status(200).send("actualizado")
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo put no autorizado'})  
+   }
 })
 
 // Delete /api/productos/:id
 router.delete('/:id', async(req, res) => {
+   if (admin){
    const {id} = req.params
    const result = await c.deleteById(id)
    res.status(200).send('delete ok')
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo delete no autorizado'})   
+   }
 })
 
 //nuevo servidor
