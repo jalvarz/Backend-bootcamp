@@ -1,0 +1,27 @@
+{
+  "name": "clase14",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack ./mensaje1.js ./mensaje2.js ./mensaje3.js --mode=production",
+    "dev": "webpack ./mensaje1.js ./mensaje2.js ./mensaje3.js --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^6.7.1",
+    "ejs": "^3.1.8",
+    "ejs-loader": "^0.5.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  },
+  "devDependencies": {
+    "typescript-loader": "^1.1.3"
+  }
+}
