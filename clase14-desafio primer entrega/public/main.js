@@ -8,10 +8,16 @@ button.addEventListener("click",(event)=>{
     const inputTitle = document.querySelector("#title").value
     const inputPrice = document.querySelector("#price").value
     const inputUrl = document.querySelector("#thumbnail").value
+    const inputDescription = document.querySelector("#description").value
+    const inputCodigo = document.querySelector("#code").value
+    const inputStock = document.querySelector("#stock").value
     const product = {
         title: inputTitle,
         price: inputPrice,
-        thumbnail: inputUrl
+        thumbnail: inputUrl,
+        description: inputDescription,
+        stock: inputStock,
+        code: inputCodigo
     }
     socket.emit('newProduct',product)
  })
@@ -25,6 +31,9 @@ button.addEventListener("click",(event)=>{
             <td><img src="${product.thumbnail}" class="img-fluid img-thumbnail" ></td>
             <td>${product.title}</td> 
             <td>${product.price}</td>
+            <td>${product.description}</td>
+            <td>${product.stock}</td>
+            <td>${product.code}</td>
             </tr>
             `
         )

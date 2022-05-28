@@ -104,10 +104,12 @@ io.on('connection',(socket)=>{
    console.log('websocket inicializado',socket.id)
 
    socket.on("newProduct",product=>{
+         
            products.push(product)
        //    const id = c.save(product);
 
            io.sockets.emit('updateData',products)
+           console.log(products)
    })
 
    socket.on("newMessage",message=>{

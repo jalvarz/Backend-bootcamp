@@ -3,20 +3,20 @@
     "id": 0,
     "timestamp":"444",
     "title": "bujia",
-    "descriptio":"es una bujia",
-    "codigo": "33ffS",
+    "description":"es una bujia",
+    "code": "33ffS",
     "price": 50,
-    "stock":40,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png",
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
   },
   {
     "id": 4,
     "timestamp":"444",
     "title": "amortiguador",
-    "descriptio":"es un amoriguador",
-    "codigo": "33ffS",
+    "description":"es un amoriguador",
+    "code": "33ffS",
     "price": 200,
-    "stock":40,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png",
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
   }
 ]
