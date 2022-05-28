@@ -39,7 +39,7 @@ app.engine('hbs',handlebars.engine({
 const messages = m.getAll()
 let products = c.getAll()
 
-const admin = true
+const admin = false
 
 app.get('/',(req,res)=>{
    const products = c.getAll()
@@ -64,15 +64,13 @@ router.get('/productos/:id', async (req, res) => {
 // POST /api/productos/:id 
 router.post('/productos', async (req,res)=>{
    if (admin){
-      console.log("llego algo")
       const id = await c.save(req.body);
       res.render("main",{
          productos:products, listExists:(products.length >0 ? true : false)
       })
-      res.status(200).redirect('/')
+      res.status(200).send("ok")
    }else{
       res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
-      res.status(503)
    }
 }
 )
@@ -108,7 +106,44 @@ router.get('/carrito', async (req, res) => {
    res.status(200).json(products)
 })
 
+// Delete /api/carrito/:id
+router.delete('/carrito/:id', async(req, res) => {
+   if (admin){
+   const {id} = req.params
+   const result = await c.deleteById(id)
+   res.status(200).send('delete ok')
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo delete no autorizado'})   
+   }
+})
 
+// POST /api/carrito/:id 
+router.post('/carrito', async (req,res)=>{
+   if (admin){
+      const id = await c.save(req.body);
+      res.render("main",{
+         productos:products, listExists:(products.length >0 ? true : false)
+      })
+      res.status(200).send("ok")
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
+   }
+}
+)
+
+// POST /api/:id/carrito/ 
+router.post('/:id/carrito', async (req,res)=>{
+   if (admin){
+      const id = await c.save(req.body);
+      res.render("main",{
+         productos:products, listExists:(products.length >0 ? true : false)
+      })
+      res.status(200).send("ok")
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
+   }
+}
+)
 
 //nuevo servidor
 io.on('connection',(socket)=>{
