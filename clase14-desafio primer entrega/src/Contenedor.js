@@ -14,6 +14,7 @@ class Contenedor {
      }
 
       save(obj){
+          console.log(obj)
         let maxId=0
             console.log(obj)
             if (this.objlist.length>0){
@@ -29,7 +30,7 @@ class Contenedor {
             }
             this.objlist.push(obj)
             fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-            
+            console.log(`${this.file} actualizado`)
             return obj.id
 
         }
@@ -46,6 +47,7 @@ class Contenedor {
         id = Number(id)
         this.objlist = this.objlist.filter(obj => obj.id !== id)
         fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
+        console.log(`${this.file} actualizado`)
     }
     updateById(id,data){
         id = Number(id)
@@ -53,6 +55,7 @@ class Contenedor {
         this.objlist[foundIndex] = data;
         this.objlist[foundIndex].id = id
         fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
+        console.log(`${this.file} actualizado`)
 
     }
 

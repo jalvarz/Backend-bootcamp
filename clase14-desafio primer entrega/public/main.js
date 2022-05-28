@@ -13,11 +13,12 @@ button.addEventListener("click",(event)=>{
     const inputStock = document.querySelector("#stock").value
     const product = {
         title: inputTitle,
-        price: inputPrice,
+        price: Number(inputPrice),
         thumbnail: inputUrl,
         description: inputDescription,
-        stock: inputStock,
-        code: inputCodigo
+        stock: Number(inputStock),
+        code: inputCodigo,
+        timestamp: Date.now()
     }
     socket.emit('newProduct',product)
  })

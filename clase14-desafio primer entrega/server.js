@@ -16,13 +16,15 @@ const c = new Contenedor('productos.json')
 const m = new Contenedor('mensajes.json')
 
 const router = Router()
+const RouterCarrito = Router()
 
 //middleware
 app.use(express.static(__dirname+'/public'))
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use('/api/productos', router)
+app.use('/api', router)
+
 
 app.set('views','./views')
 app.set('view engine','hbs')
@@ -35,7 +37,7 @@ app.engine('hbs',handlebars.engine({
 }))
 
 const messages = m.getAll()
-const products = c.getAll()
+let products = c.getAll()
 
 const admin = true
 
@@ -47,22 +49,22 @@ app.get('/',(req,res)=>{
 })
 
 //GET /api/productos
-router.get('/', async (req, res) => {
+router.get('/productos', async (req, res) => {
    const products = await c.getAll()
    res.status(200).json(products)
 })
 
 //GET /api/productos/:id
-router.get('/:id', async (req, res) => {
+router.get('/productos/:id', async (req, res) => {
    const {id} = req.params
    const product = await c.getById(id)
    res.status(200).json(product)
 })
 
 // POST /api/productos/:id 
-router.post('/', async (req,res)=>{
+router.post('/productos', async (req,res)=>{
    if (admin){
-
+      console.log("llego algo")
       const id = await c.save(req.body);
       res.render("main",{
          productos:products, listExists:(products.length >0 ? true : false)
@@ -77,7 +79,8 @@ router.post('/', async (req,res)=>{
 
 
 // PUT /api/productos/:id
-router.put('/:id',async(req,res)=>{
+router.put('/productos/:id',async(req,res)=>{
+   console.log("put")
    if (admin){
    const {id} = req.body
    const result = await c.updateById(id,req.query)
@@ -88,7 +91,7 @@ router.put('/:id',async(req,res)=>{
 })
 
 // Delete /api/productos/:id
-router.delete('/:id', async(req, res) => {
+router.delete('/productos/:id', async(req, res) => {
    if (admin){
    const {id} = req.params
    const result = await c.deleteById(id)
@@ -98,6 +101,15 @@ router.delete('/:id', async(req, res) => {
    }
 })
 
+
+//GET /api/carrito
+router.get('/carrito', async (req, res) => {
+   const carritos = await c.getAll()
+   res.status(200).json(products)
+})
+
+
+
 //nuevo servidor
 io.on('connection',(socket)=>{
    io.sockets.emit('messages',messages)
@@ -105,9 +117,10 @@ io.on('connection',(socket)=>{
 
    socket.on("newProduct",product=>{
          
-           products.push(product)
+          // products.push(product)
        //    const id = c.save(product);
-
+         const id = c.save(product);
+           products = c.getAll()
            io.sockets.emit('updateData',products)
            console.log(products)
    })
