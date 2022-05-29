@@ -14,6 +14,9 @@ const { Router } = express
 const Contenedor = require('./src/Contenedor.js')
 const c = new Contenedor('productos.json')
 const m = new Contenedor('mensajes.json')
+const cart = new Contenedor('carrito.json')
+
+
 
 const router = Router()
 const RouterCarrito = Router()
@@ -39,7 +42,7 @@ app.engine('hbs',handlebars.engine({
 const messages = m.getAll()
 let products = c.getAll()
 
-const admin = false
+const admin = true
 
 app.get('/',(req,res)=>{
    const products = c.getAll()
@@ -99,28 +102,48 @@ router.delete('/productos/:id', async(req, res) => {
    }
 })
 
+// Routes Carrito
 
 //GET /api/carrito
 router.get('/carrito', async (req, res) => {
-   const carritos = await c.getAll()
-   res.status(200).json(products)
+   const carritos = await cart.getAll()
+   res.status(200).json(carritos)
 })
 
 // Delete /api/carrito/:id
 router.delete('/carrito/:id', async(req, res) => {
    if (admin){
    const {id} = req.params
-   const result = await c.deleteById(id)
+   const result = await cart.deleteById(id)
    res.status(200).send('delete ok')
    }else{
       res.status(200).send({"error":-1, "descripcion":'ruta / y metodo delete no autorizado'})   
    }
 })
-
-// POST /api/carrito/:id 
+//-------------
+// Crear Carrito OK
+// POST /api/carrito/ 
 router.post('/carrito', async (req,res)=>{
    if (admin){
-      const id = await c.save(req.body);
+      req.body['timestamp']=Date.now()
+      const id = await cart.save(req.body);
+      console.log(req.body)
+
+      res.status(200).send(`{"id":${id}}`)
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
+   }
+}
+)
+
+// 
+// POST /api/:id/carrito/ 
+router.post('/carrito/:id/productos', async (req,res)=>{
+   if (admin){
+      const productById = c.getById(req.params)
+      const carritoById = cart.getById()
+
+      const id = await cart.save(req.body)
       res.render("main",{
          productos:products, listExists:(products.length >0 ? true : false)
       })
@@ -131,19 +154,15 @@ router.post('/carrito', async (req,res)=>{
 }
 )
 
-// POST /api/:id/carrito/ 
-router.post('/:id/carrito', async (req,res)=>{
-   if (admin){
-      const id = await c.save(req.body);
-      res.render("main",{
-         productos:products, listExists:(products.length >0 ? true : false)
-      })
-      res.status(200).send("ok")
-   }else{
-      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
-   }
-}
-)
+//GET /api/productos/:id
+router.get('/carrito/:id/productos/', async (req, res) => {
+   const {id} = req.params
+   const product = await cart.getById(id)
+   console.log(product)
+   res.status(200).json(product)
+})
+
+
 
 //nuevo servidor
 io.on('connection',(socket)=>{
