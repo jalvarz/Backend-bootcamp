@@ -1,4 +1,5 @@
-const fs = require('fs')
+// const fs = require('fs')
+import fs from 'fs'
 
 class Contenedor {
     constructor(archivo){
@@ -63,8 +64,9 @@ class Contenedor {
         this.objlist=[]
     }
 }    
+export default Contenedor
 
-module.exports = Contenedor;
+// module.exports = Contenedor;
 
 /*
 const obj1 ={

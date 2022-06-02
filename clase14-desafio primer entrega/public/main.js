@@ -45,6 +45,7 @@ const divMessages = document.querySelector("#messages")
 const enviarMsg = document.querySelector("#enviarMsg")
 
 enviarMsg.addEventListener("click",(event)=>{
+    console.log("click msg")
     const inputMail = document.querySelector("#mail").value
     const inputTexto = document.querySelector("#texto").value
     document.getElementById("mail").disabled = true

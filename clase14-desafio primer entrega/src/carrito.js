@@ -1,8 +1,0 @@
-class cart{
-
-    constructor(){
-        
-    }
-
-    createCart
-}
