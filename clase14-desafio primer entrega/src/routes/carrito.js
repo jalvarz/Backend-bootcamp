@@ -27,39 +27,55 @@ router.get('/', async (req, res) => {
  // Crear Carrito OK
  // POST /api/carrito/ 
  router.post('/', async (req,res)=>{
-    if (admin){
        req.body['timestamp']=Date.now()
+       req.body['products']=[]
        const id = await cart.save(req.body);
-       console.log(req.body)
- 
        res.status(200).send(`{"id":${id}}`)
-    }else{
-       res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
-    }
+
  }
  )
-  
+ // Agregar productos al carrito. 
  // POST /api/:id/carrito/ 
  router.post('/:id/productos', async (req,res)=>{
     if (admin){
-       const productById = c.getById(req.params)
-       const carritoById = cart.getById()
-       const id = await cart.save(req.body)
+      const c = new Contenedor('./src/database/productos.json')
+      const productById = c.getById(req.body.id)[0] //chequear si existe
+      const {id} = req.params
+       var carritoById = cart.getById(id)
+       const cartaux= carritoById[0]
+       cartaux.products = [...cartaux.products,productById]
+      await cart.updateById(id,cartaux)
+       
+         /*  
        res.render("main",{
           productos:products, listExists:(products.length >0 ? true : false)
-       })
+         })
+         */
        res.status(200).send("ok")
-    }else{
-       res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
-    }
+      }else{
+         res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
+      }
  }
  )
+
+ // Delete /api/productos/:id
+ router.delete('/:id/productos/:id_prod', async(req, res) => {
+   if (admin){
+   const {id,id_prod} = req.params
+   var carritoById = cart.getById(id)
+   const cartaux= carritoById[0]
+   cartaux.products = cartaux.products.filter(obj => obj.id !== Number(id_prod))
+   await cart.updateById(id,cartaux)
+   res.status(200).send('delete ok')
+   }else{
+      res.status(200).send({"error":-1, "descripcion":'ruta / y metodo delete no autorizado'})   
+   }
+})
  
  //GET /api/productos/:id
  router.get('/:id/productos/', async (req, res) => {
     const {id} = req.params
     const product = await cart.getById(id)
-    console.log(product)
     res.status(200).json(product)
  })
  

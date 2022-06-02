@@ -15,9 +15,9 @@ class Contenedor {
      }
 
       save(obj){
-          console.log(obj)
+          //console.log(obj)
         let maxId=0
-            console.log(obj)
+            
             if (this.objlist.length>0){
                 const ids = this.objlist.map(object => {
                   return object.id;
@@ -51,6 +51,7 @@ class Contenedor {
         console.log(`${this.file} actualizado`)
     }
     updateById(id,data){
+        //console.log(data)
         id = Number(id)
         var foundIndex = this.objlist.findIndex(x => x.id == id);
         this.objlist[foundIndex] = data;

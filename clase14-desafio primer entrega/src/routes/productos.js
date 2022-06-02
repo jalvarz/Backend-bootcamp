@@ -22,9 +22,10 @@ router.get('/', async (req, res) => {
  router.post('/', async (req,res)=>{
     if (admin){
        const id = await c.save(req.body);
+       /* deshabilitado, solo para renderizar vista
        res.render("main",{
           productos:products, listExists:(products.length >0 ? true : false)
-       })
+       })*/
        res.status(200).send("ok")
     }else{
        res.status(200).send({"error":-1, "descripcion":'ruta / y metodo POST no autorizado'})  
@@ -34,10 +35,9 @@ router.get('/', async (req, res) => {
  
  // PUT /api/productos/:id
  router.put('/:id',async(req,res)=>{
-    console.log("put")
     if (admin){
-    const {id} = req.body
-    const result = await c.updateById(id,req.query)
+    const {id} = req.params
+    const result = await c.updateById(id,req.body)
     res.status(200).send("actualizado")
     }else{
        res.status(200).send({"error":-1, "descripcion":'ruta / y metodo put no autorizado'})  

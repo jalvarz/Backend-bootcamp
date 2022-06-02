@@ -1,0 +1,3 @@
+{
+    "ignore": ["carrito.json", "mensajes.json","productos.json", "nodemon.json"]
+}
