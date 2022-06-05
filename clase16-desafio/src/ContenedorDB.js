@@ -1,20 +1,9 @@
-import {options} from './configDB.js'
+
 import knex from 'knex'
 
 
-knex(options).schema.createTable('mensajes',table=>{
 
-    table.increments('id').primary().unique()
-    table.string('name').notNullable()
-    table.integer('edad').notNullable()
-})
-.then(()=>{
-    console.log('table created')
-})
-.catch((err)=>{
-    throw err
-})
-
+/*
 
 const usuarios = [
     {
@@ -37,42 +26,78 @@ usersdb.forEach(user=>{
     console.log(`el usuario ${user.name} ${user.lastname}`)
 
 })
+*/
 
 class Contenedor{
-    constructor(options){
-
+    constructor(options,table){
+        this.options = options
+        this.table = table
+    
     }
 
     initDb(){
-        knex(options).schema.createTable('mensajes',table=>{
+        knex(this.options).schema.createTable('mensajes',table=>{
             table.increments('id').primary().unique()
             table.string('text').notNullable()
             table.string('mail').notNullable()
             table.string('datetime').notNullable()
-       //     table.integer('edad').notNullable()
+    //     table.integer('edad').notNullable()
         })
         .then(()=>{
-            console.log('table created')
+            console.log('tabla creada')
         })
         .catch((err)=>{
-            throw err
-        })
-        
-        knex(options).schema.createTable('mensajes',table=>{
-            table.increments('id').primary().unique()
-            table.string('text').notNullable()
-            table.string('mail').notNullable()
-            table.string('datetime').notNullable()
-       //     table.integer('edad').notNullable()
-        })
-        .then(()=>{
-            console.log('table created')
-        })
-        .catch((err)=>{
-            throw err
+            //throw err
+            console.log("error creando tabla")
         })
     }
+    initDbMsj(){
+        knex(this.options).schema.createTable('mensajes',table=>{
+            table.increments('id').primary().unique()
+            table.string('text').notNullable()
+            table.string('mail').notNullable()
+            table.string('date').notNullable()
+    //     table.integer('edad').notNullable()
+        })
+        .then(()=>{
+            console.log('tabla creada')
+        })
+        .catch((err)=>{
+            //throw err
+            console.log("error creando tabla")
+        })
+    } 
+
+    getAll(){
+        knex(this.options).from(this.table).select("*")
+        .then(this.objlist)
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
+        return (this.objlist)
+    }
+    
+    save(obj){
+        //console.log(obj)
+        knex(this.options)(this.table).insert(obj)
+        .then(()=>console.log("data insertada"))
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
+
+          return obj.id
+      }
+
+      getById(id){
+        return(this.objlist.filter(obj => obj.id == id) )
+    }
+
 }
+export default Contenedor
+
+
 // const fs = require('fs')
 
 

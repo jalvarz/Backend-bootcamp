@@ -5,6 +5,8 @@ const options ={
         user: 'root',
         password:'root',
         database: 'mysql'
-    },
-    pool:{min:0,max:10}
+    }
 }
+
+
+export default options

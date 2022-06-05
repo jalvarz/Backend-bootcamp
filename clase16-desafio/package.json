@@ -2,14 +2,16 @@
   "name": "clase16-desafio",
   "version": "1.0.0",
   "description": "clase16 desafio",
-  "main": "server.js",
+  "main": "testdb.js",
   "type": "module",
   "nodemonConfig": {
-    "ignore": ["*.json"],
+    "ignore": [
+      "*.json"
+    ],
     "delay": 2500
   },
   "scripts": {
-    "start": "nodemon ./src/server.js",
+    "start": "nodemon ./src/testdb.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Javier Alvarez",
@@ -17,8 +19,10 @@
   "dependencies": {
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
+    "knex": "^2.1.0",
     "nodemon": "^2.0.16",
     "socket.io": "^4.5.1",
-    "socketio": "^1.0.0"
+    "socketio": "^1.0.0",
+    "sqlite3": "^5.0.8"
   }
 }
