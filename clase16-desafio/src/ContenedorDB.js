@@ -1,81 +1,104 @@
-
 import knex from 'knex'
-
-
-
-/*
-
-const usuarios = [
-    {
-        name:'yo',
-        edad:3
-    }
-]
-
-knex(options)('mensajes').insert(usuarios)
-.then(()=>{
-    console.log("usuarios agregados con exito")
-})
-.catch((err)=>{
-    throw err
-})
-
-const usersdb = await knex(options).from('users').select('*')
-
-usersdb.forEach(user=>{
-    console.log(`el usuario ${user.name} ${user.lastname}`)
-
-})
-*/
 
 class Contenedor{
     constructor(options,table){
         this.options = options
         this.table = table
-    
     }
 
-    initDb(){
-        knex(this.options).schema.createTable('mensajes',table=>{
+    initDbProductos(){
+        const initProductos =
+            [
+                {
+              "id": 0,
+              "timestamp": 1653708971715,
+              "title": "bujia",
+              "description": "es una bujia",
+              "code": "33ffS",
+              "price": 50,
+              "stock": 40,
+              "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+            },
+            {
+              "id": 4,
+              "timestamp": 1653708971715,
+              "title": "amortiguador",
+              "description": "es un amoriguador",
+              "code": "33ffS",
+              "price": 200,
+              "stock": 40,
+              "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+            }
+          ]
+
+          knex(this.options).schema.createTable(this.table,table=>{
             table.increments('id').primary().unique()
-            table.string('text').notNullable()
-            table.string('mail').notNullable()
-            table.string('datetime').notNullable()
-    //     table.integer('edad').notNullable()
+            table.string('timestamp').notNullable()
+            table.string('title').notNullable()
+            table.string('description').notNullable()
+            table.string('code').notNullable()
+            table.integer('price').notNullable()
+            table.integer('stock').notNullable()
+            table.string('thumbnail').notNullable()
         })
         .then(()=>{
             console.log('tabla creada')
+            this.save(initProductos)
         })
         .catch((err)=>{
-            //throw err
-            console.log("error creando tabla")
+            console.log(err.sqlMessage)
+        })
+        .finally(()=>{
+            knex(this.options).destroy()
         })
     }
+
     initDbMsj(){
-        knex(this.options).schema.createTable('mensajes',table=>{
+        initMensajes= [
+            {
+              "mail": "Java",
+              "text": "Bro I need more funding for my project",
+              "date": "5/23/2022, 10:39:02 AM",
+            },
+            {
+              "mail": "Elon Musk",
+              "text": "sure, hold my beer",
+              "date": "5/23/2022, 10:50:02 AM",
+            },
+            {
+              "mail": "Java",
+              "text": "thanks mate",
+              "date": "5/23/2022, 10:52:02 AM",
+            }
+          ]
+        knex(this.options).schema.createTable(this.table,table=>{
             table.increments('id').primary().unique()
             table.string('text').notNullable()
             table.string('mail').notNullable()
             table.string('date').notNullable()
-    //     table.integer('edad').notNullable()
         })
         .then(()=>{
             console.log('tabla creada')
+            this.save(initMensajes)
         })
         .catch((err)=>{
-            //throw err
-            console.log("error creando tabla")
+            console.log(err.sqlMessage)
+        })
+        .finally(()=>{
+            knex(this.options).destroy()
         })
     } 
 
     getAll(){
         knex(this.options).from(this.table).select("*")
-        .then(this.objlist)
+        .then((objlist)=>{
+            console.log(objlist)
+            return (objlist)
+        })
         .catch((err)=>{console.log(err);throw err})
         .finally(()=>{
             knex(this.options).destroy()
         })
-        return (this.objlist)
     }
     
     save(obj){
@@ -86,116 +109,45 @@ class Contenedor{
         .finally(()=>{
             knex(this.options).destroy()
         })
-
-          return obj.id
-      }
-
-      getById(id){
-        return(this.objlist.filter(obj => obj.id == id) )
     }
 
-}
-export default Contenedor
-
-
-// const fs = require('fs')
-
-
-/*
-import fs from 'fs'
-
-
-
-class Contenedor {
-    constructor(archivo){
-        this.file = archivo
-        this.objlist=[]
-        try{
-            this.objlist = JSON.parse(fs.readFileSync(this.file,'utf-8'))
-            console.log(`archivo encontrado ${this.file}`)
-        }catch{
-            console.log(`archivo no encontrado, creando ${this.file}`)
-            fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-        }
-     }
-
-      save(obj){
-          //console.log(obj)
-        let maxId=0
-            
-            if (this.objlist.length>0){
-                const ids = this.objlist.map(object => {
-                  return object.id;
-                });
-
-                maxId = Math.max(...ids);
-                obj.id = maxId+1
-
-            }else{
-                obj.id = 0
-            }
-            this.objlist.push(obj)
-            fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-            console.log(`${this.file} actualizado`)
-            return obj.id
-
-        }
-        
     getById(id){
-        return(this.objlist.filter(obj => obj.id == id) )
+        knex(this.options).from(this.table).select("*").where({id:id})
+        .then((obj)=>{
+            console.log(obj)
+            return (obj)
+        })
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
     }
 
-    getAll(){
-        return (this.objlist)
-    }
-    
     deleteById(id){
-        id = Number(id)
-        this.objlist = this.objlist.filter(obj => obj.id !== id)
-        fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-        console.log(`${this.file} actualizado`)
-    }
-    updateById(id,data){
-        //console.log(data)
-        id = Number(id)
-        var foundIndex = this.objlist.findIndex(x => x.id == id);
-        this.objlist[foundIndex] = data;
-        this.objlist[foundIndex].id = id
-        fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-        console.log(`${this.file} actualizado`)
-
+        knex(this.options).from(this.table).where({id:id}).del()
+        .then(()=>console.log("data eliminada"))
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
     }
 
     deleteAll(){
-        this.objlist=[]
+        knex(this.options).from(this.table).del()
+        .then(()=>console.log("toda la data eliminada"))
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
     }
-}    
+
+    updateById(id,data){
+        knex(this.options)(this.table).where({id:id}).update(data)
+        .then(()=>console.log("data actualizada"))
+        .catch((err)=>{console.log(err);throw err})
+        .finally(()=>{
+            knex(this.options).destroy()
+        })
+    }
+}
 export default Contenedor
-
-// module.exports = Contenedor;
-
-/*
-const obj1 ={
-    title: 'Escuadra',
-    price: 123.45,
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png',
-}
-
-
-
-const obj2 ={
-    title: 'blabla',
-    price: 200,
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png',
-}
-
-export {Contenedor}
-//const c = new Contenedor('clase4.txt')
-
-//c.save(obj1)
-//c.save(obj2)
-//console.log(c.getById(1))
-//console.log(c.getAll())
-//c.deleteById(2)
-//c.deleteAll()
-*/

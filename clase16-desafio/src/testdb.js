@@ -7,19 +7,24 @@ const db = new contenedor(options,'productos')
 
 const m = new contenedor(optionsSqlite,'mensajes')
 
-//db.initDb()
 
-m.initDbMsj()
+// db.initDbProductos()
+// db.getAll()
+
+//m.initDbMsj()
 
 
-const msj = {
-    mail: "Java",
-    text: "Bro I need more funding for my project",
-    date: "5/23/2022, 10:39:02 AM"
-}
 
-m.save(msj)
+//m.save(msj)
 
-console.log(m.getAll())
 
-console.log("jgg")
+// m.getById(3)
+
+// m.updateById(17,msj)
+m.getAll()
+
+//m.deleteById(3)
+//m.deleteAll()
+
+
+// db.getAll()

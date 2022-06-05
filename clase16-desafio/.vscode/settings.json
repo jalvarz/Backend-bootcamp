@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "java",
+            "group": "java",
+            "database": "${workspaceFolder:clase16-desafio}/src/database/mensajes.sqlite"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
