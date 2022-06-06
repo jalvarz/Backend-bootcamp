@@ -6,7 +6,7 @@ class Contenedor{
         this.table = table
     }
 
-    initDbProductos(){
+    async initDbProductos(){
         const initProductos =
             [
                 {
@@ -53,7 +53,7 @@ class Contenedor{
         })
     }
 
-    initDbMsj(){
+    async initDbMsj(){
         initMensajes= [
             {
               "mail": "Java",
@@ -89,19 +89,20 @@ class Contenedor{
         })
     } 
 
-    getAll(){
-        knex(this.options).from(this.table).select("*")
-        .then((objlist)=>{
-            console.log(objlist)
-            return (objlist)
-        })
-        .catch((err)=>{console.log(err);throw err})
-        .finally(()=>{
+    async getAll(){
+        try{
+            const objlist = await knex(this.options).from(this.table).select("*")
+            return objlist
+        }
+        catch (error){
+            console.log(error)
+        }
+        finally{
             knex(this.options).destroy()
-        })
+        }
     }
     
-    save(obj){
+    async save(obj){
         //console.log(obj)
         knex(this.options)(this.table).insert(obj)
         .then(()=>console.log("data insertada"))
@@ -111,7 +112,7 @@ class Contenedor{
         })
     }
 
-    getById(id){
+    async getById(id){
         knex(this.options).from(this.table).select("*").where({id:id})
         .then((obj)=>{
             console.log(obj)
@@ -123,7 +124,7 @@ class Contenedor{
         })
     }
 
-    deleteById(id){
+    async deleteById(id){
         knex(this.options).from(this.table).where({id:id}).del()
         .then(()=>console.log("data eliminada"))
         .catch((err)=>{console.log(err);throw err})
@@ -132,7 +133,7 @@ class Contenedor{
         })
     }
 
-    deleteAll(){
+    async deleteAll(){
         knex(this.options).from(this.table).del()
         .then(()=>console.log("toda la data eliminada"))
         .catch((err)=>{console.log(err);throw err})
@@ -141,7 +142,7 @@ class Contenedor{
         })
     }
 
-    updateById(id,data){
+    async updateById(id,data){
         knex(this.options)(this.table).where({id:id}).update(data)
         .then(()=>console.log("data actualizada"))
         .catch((err)=>{console.log(err);throw err})

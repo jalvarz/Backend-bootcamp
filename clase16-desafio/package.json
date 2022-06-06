@@ -2,7 +2,7 @@
   "name": "clase16-desafio",
   "version": "1.0.0",
   "description": "clase16 desafio",
-  "main": "testdb.js",
+  "main": "server.js",
   "type": "module",
   "nodemonConfig": {
     "ignore": [
@@ -11,7 +11,7 @@
     "delay": 2500
   },
   "scripts": {
-    "start": "nodemon ./src/testdb.js",
+    "start": "nodemon ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Javier Alvarez",

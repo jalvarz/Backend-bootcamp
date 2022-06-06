@@ -1,12 +1,15 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import Contenedor from './Contenedor.js'
+import contenedor from './ContenedorDB.js'
 import { Server } from 'socket.io'
 import http from 'http'
 import morgan from 'morgan'
 import productosRoutes from './routes/productos.js'
 import carritoRoutes from './routes/carrito.js'
+
+import options from './configDB.js'
+import optionsSqlite from './configDBsqlite.js'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -34,18 +37,22 @@ app.engine('hbs',handlebars.engine({
 app.set('view engine','hbs')
 app.set('views',path.join(__dirname, '../views'))
 
-app.get('/',(req,res)=>{
-   const c = new Contenedor('./src/database/productos.json')
-   const products = c.getAll()
-   res.render("main",{
-       productos:products, listExists:(products.length >0 ? true : false)
-   })
-})
+const c = new contenedor(options,'productos')
+const products = c.getAll()
 
-const io = new Server(httpServer)
-console.log("stream de datos inicializado")
-    const m = new Contenedor('./src/database/mensajes.json')
-    const messages = m.getAll()
+app.get('/',(req,res)=>{
+        products.then((products)=>{
+            res.render("main",{
+                productos:products, listExists:(products.length >0 ? true : false)
+            }) 
+        })
+    }
+)
+
+    const io = new Server(httpServer)
+    console.log("stream de datos inicializado")
+    const m = new contenedor(optionsSqlite,'mensajes')
+    const messages = await m.getAll()
     //nuevo servidor
     io.on('connection',(socket)=>{
         io.sockets.emit('messages',messages)
@@ -55,8 +62,9 @@ console.log("stream de datos inicializado")
             
             // products.push(product)
             //    const id = c.save(product);
-            const id = c.save(product);
-            products = c.getAll()
+            c.save(product);
+            products.then((products)=>{products=products})
+          //  products = c.getAll()
             io.sockets.emit('updateData',products)
         })
         
