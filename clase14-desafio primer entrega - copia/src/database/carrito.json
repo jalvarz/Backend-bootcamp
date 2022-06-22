@@ -1,0 +1,18 @@
+[
+  {
+    "timestamp": 1654206518754,
+    "products": [
+      {
+        "id": 4,
+        "timestamp": 1653708971715,
+        "title": "amortiguador",
+        "description": "es un amoriguador",
+        "code": "33ffS",
+        "price": 200,
+        "stock": 40,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+      }
+    ],
+    "id": 0
+  }
+]

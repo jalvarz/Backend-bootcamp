@@ -1,3 +1,61 @@
+use ecommerce
+db.createCollection("productos")
+db.createCollection("mensajes")
+
+db.mensajes.insert([
+  {
+    "mail": "Java@yo.com",
+    "text": "Bro I need more funding for my project",
+    "date": "5/23/2022, 10:39:02 AM",
+  },
+  {
+    "mail": "Elmolusco@hotmail.com",
+    "text": "sure, hold my beer",
+    "date": "5/23/2022, 10:50:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": "thanks mate",
+    "date": "5/23/2022, 10:52:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": "hii",
+    "date": "5/23/2022, 10:39:02 AM",
+  },
+  {
+    "mail": "Elmolusco@hotmail.com",
+    "text": "whats upppp",
+    "date": "5/23/2022, 10:50:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": "all goood",
+    "date": "5/23/2022, 10:52:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": "great",
+    "date": "5/23/2022, 10:39:02 AM",
+  },
+  {
+    "mail": "Elmolusco@hotmail.com",
+    "text": "XD",
+    "date": "5/23/2022, 10:50:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": "¯\_(ツ)_/¯ ",
+    "date": "5/23/2022, 10:52:02 AM",
+  },
+  {
+    "mail": "Java@yo.com",
+    "text": ">D",
+    "date": "5/23/2022, 10:52:02 AM",
+  }
+])
+
+db.productos.insert(
 [
   {
     "timestamp": 1653708971715,
@@ -89,4 +147,66 @@
     "stock": 40,
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
   }
+])
+
+
+db.mensajes.find().pretty()
+db.productos.find().pretty()
+
+db.mensajes.find().count()
+db.productos.find().count()
+
+punto 5:
+
+A)
+db.productos.insert(
+ {
+    "timestamp": 1653708971715,
+    "title": "stereo",
+    "description": "es un stereo",
+    "code": "33ffS",
+    "price": 1500,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  }
+)
+
+B.1)
+
+Bdb.productos.find({"price" : {$lte: 1000}}).pretty()
+
+B.2)
+
+db.productos.find({"price" : { $gt :  1000, $lt : 3000}}).pretty()
+
+B.3)
+db.productos.find({"price" : { $gt : 3000}}).pretty()
+
+B.4) nombre del producto mas barato
+db.productos.find({},{_id:0}).sort({"price":1}).pretty().skip(2).limit(1)
+
+C)
+db.productos.updateMany({},{$set:{"stock":100}})
+
+
+
+D) nota: se hizo para productos mayores a 2000, no 4000 ya que no habia productos en el dataset con productos mayores a 4000
+db.productos.updateMany({"price":{$gt:2000}},{$set:{"stock":0}})
+
+E)
+db.productos.deleteMany({"price":{$lte:1000}})
+
+6)
+use admin
+db.createUser(
+{
+"user":"pepe",
+"pwd":"asd456",
+"roles":[
+{"role": "read","db":"ecommerce"}
 ]
+}
+)
+
+mongo -u pepe -p asd456  --authenticationDatabase ecommerce
+
