@@ -1,7 +1,7 @@
 // const fs = require('fs')
 import fs from 'fs'
 
-class Contenedor {
+class filesystemClass {
     constructor(archivo){
         this.file = archivo
         this.objlist=[]
@@ -65,7 +65,7 @@ class Contenedor {
         this.objlist=[]
     }
 }    
-export default Contenedor
+export default filesystemClass
 
 // module.exports = Contenedor;
 
