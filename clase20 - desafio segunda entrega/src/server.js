@@ -1,15 +1,16 @@
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import contenedor from './ContenedorDB.js'
+import contenedor from '../src/contenedores/ContenedorDB.js'
 import { Server } from 'socket.io'
 import http from 'http'
 import morgan from 'morgan'
-import productosRoutes from './routes/productos.js'
-import carritoRoutes from './routes/carrito.js'
+import productsRoutes from './routes/productsRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
+import config from './config.js'
 
-import options from './configDB.js'
-import optionsSqlite from './configDBsqlite.js'
+//import options from './configDB.js'
+//import optionsSqlite from './configDBsqlite.js'
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -24,8 +25,8 @@ app.use(express.static(path.join(__dirname,'../public')))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
-app.use('/productos',productosRoutes)
-app.use('/carrito',carritoRoutes)
+app.use('/productos',productsRoutes)
+app.use('/carrito',cartRoutes)
 
 app.engine('hbs',handlebars.engine({
    extname:".hbs",
@@ -37,9 +38,9 @@ app.engine('hbs',handlebars.engine({
 app.set('view engine','hbs')
 app.set('views',path.join(__dirname, '../views'))
 
-const c = new contenedor(options,'productos')
-const products = c.getAll()
-
+//const c = new contenedor(config.Sqlite.options,'productos')
+//const products = c.getAll()
+/*
 app.get('/',(req,res)=>{
         products.then((products)=>{
             res.render("main",{
@@ -48,10 +49,11 @@ app.get('/',(req,res)=>{
         })
     }
 )
-
+*/
+/*
     const io = new Server(httpServer)
     console.log("stream de datos inicializado")
-    const m = new contenedor(optionsSqlite,'mensajes')
+    const m = new contenedorDB(config.Sqlite.options,'mensajes')
     const messages = await m.getAll()
     //nuevo servidor
     io.on('connection',(socket)=>{
@@ -81,6 +83,7 @@ app.get('/',(req,res)=>{
      console.log(`llego ${messages}`)
     })
     
+    */
 const PORT = process.env.PORT || 8080
 
 httpServer.listen(PORT, err =>{

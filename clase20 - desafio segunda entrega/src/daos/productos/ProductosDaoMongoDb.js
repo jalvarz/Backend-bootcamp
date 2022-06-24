@@ -1,5 +1,5 @@
 import MongoClass from "../../contenedores/MongoClass.js";
-
+import mongoose from "mongoose";
 export class productosMongodb extends MongoClass{
     constructor(){
         super ('productos',{
@@ -12,6 +12,9 @@ export class productosMongodb extends MongoClass{
             thumbnail: {type:String,required:true},
         })
     }
+
+
+    
 }
 
 

@@ -1,6 +1,6 @@
 import MongoClass from "../../contenedores/MongoClass.js";
-
-export class MongoDBUsers extends MongoClass{
+import mongoose from "mongoose";
+export class carritosMongodb extends MongoClass{
     constructor(){
         const productSchema = mongoose.Schema({
             timestamp: {type:String,required:true},

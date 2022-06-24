@@ -12,6 +12,7 @@ class MongoClass {
 async getAll(){
     try{
         const data = await this.collection.find({})
+        console.log(data)
         return data
 
     }catch(error){
@@ -21,7 +22,8 @@ async getAll(){
 
 async save(obj){
     try{
-        await this.collection.insert(obj)
+        console.log(obj)
+        await this.collection.create(obj)
     }catch(error){
         throw new Error('error: ', error)
     }
@@ -41,14 +43,11 @@ async getById(id){
 
 async deleteById(id){
     try{
-        await this.collection.delete(obj)
+        await this.collection.delete(id)
     }catch(error){
         throw new Error('error: ', error)
     }
-    // id = Number(id)
-    // this.objlist = this.objlist.filter(obj => obj.id !== id)
-    // fs.writeFileSync(this.file, JSON.stringify(this.objlist,null,2))
-    // console.log(`${this.file} actualizado`)
+
 }
 
 async updateById(id,data){
