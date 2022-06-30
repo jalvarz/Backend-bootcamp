@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": 1653708971715,
+    "title": "bujia",
+    "description": "es una bujia",
+    "code": "33ffS",
+    "price": 200,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "amortiguador",
+    "description": "es un amoriguador",
+    "code": "33ffS",
+    "price": 500,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "rueda",
+    "description": "es una rueda",
+    "code": "33ffS",
+    "price": 570,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "volante",
+    "description": "es un volante",
+    "code": "33ffS",
+    "price": 2900,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "tablero",
+    "description": "es un tablero",
+    "code": "33ffS",
+    "price": 540,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "filtro",
+    "description": "es un filtro",
+    "code": "33ffS",
+    "price": 2600,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "asiento",
+    "description": "es un asiento",
+    "code": "33ffS",
+    "price": 750,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "parabrisas",
+    "description": "es un parabrisas",
+    "code": "33ffS",
+    "price": 2200,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "antena",
+    "description": "es una antena",
+    "code": "33ffS",
+    "price": 450,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_spark_car_plug_mechanic_service_electric-64.png"
+  },
+  {
+    "timestamp": 1653708971715,
+    "title": "escape",
+    "description": "es un escape",
+    "code": "33ffS",
+    "price": 2500,
+    "stock": 40,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/car-machine/64/1_shockbreaker_service_automobile_car_part-64.png"
+  }
+]
